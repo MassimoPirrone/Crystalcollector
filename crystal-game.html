@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <title>Crystals Collector</title>
+
+    <style>
+      .crystal {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Title -->
+    <h1>CrystalsCollector!</h1>
+  
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <div id="crystal-1" class="crystal">Crystal 1</div>
+    <div id="crystal-2" class="crystal">Crystal 2</div>
+    <div id="crystal-3" class="crystal">Crystal 3</div>
+    <div id="crystal-4" class="crystal">Crystal 4</div>
+
+    <!-- Script -->
+
+    <script type="text/javascript">
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    var crystals = {};
+    var currentScore;
+    var winningScore;
+
+    function resetGame() {
+        winningScore = getRandomWinningScore();
+        currentScore = 0;
+  
+        crystals = {
+          "crystal-1": getRandomCrystalScore(),
+          "crystal-2": getRandomCrystalScore(),
+          "crystal-3": getRandomCrystalScore(),
+          "crystal-4": getRandomCrystalScore()
+        }
+
+        console.log('reset game');
+        console.log('winningScore: ' + winningScore);
+        console.log(crystals);
+    }
+
+    function getRandomCrystalScore() {
+      return Math.floor(Math.random() * 12) + 1;
+    }
+
+    function getRandomWinningScore() {
+      return Math.floor(Math.random() * 120) + 1;
+    }
+ 
+
+    //  On Click event associated with the add-to-do function
+    $(".crystal").on("click", function(event) {
+      event.preventDefault();
+      if (!event.currentTarget.id)
+        console.log('Error: could not find the crystal via ID');
+
+      var score = crystals[event.currentTarget.id];
+      currentScore += score;
+
+      console.log(currentScore);
+
+      if (currentScore === winningScore) {
+        console.log("you won!");
+        resetGame();
+      }
+
+      else if (currentScore > winningScore) {
+        console.log("you lost!!");
+        resetGame();
+      }
+
+    });
+
+    resetGame();
+
+});
+    </script>
+
+  </body>
+
+</html>
